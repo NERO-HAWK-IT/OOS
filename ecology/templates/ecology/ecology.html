@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block title %} {{ title }} {% endblock %}
+{% block content %}
+    <h1>{{ waste.code }}</h1>
+    <p>{{ waste.name }}</p>
+    <p >{{ waste.danger_class }}</p>
+    <img src="{{ waste.picture }}">
+
+
+{% endblock %}

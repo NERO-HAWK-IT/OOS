@@ -7,11 +7,11 @@ from .models import *
 @admin.register(Waste_types)
 class Waste_typesAdmin(admin.ModelAdmin):
     """Виды отходов"""
-    list_display = ['name', 'code', 'start_date', 'end_date']  # список отображаемых в админке полей (preview)
+    list_display = ['code', 'name', 'start_date', 'end_date']  # список отображаемых в админке полей (preview)
     list_editable = []  # список редактируемых полей (preview)
-    ordering = ['code', 'name'] #поля по которым будет происходит сортировка (preview)
-    list_per_page = 13 #пагинация (preview)
-    search_fields = ['code', 'name'] #поле поиска (preview)
+    ordering = ['-end_date', 'code', 'name']  # поля по которым будет происходит сортировка (preview)
+    list_per_page = 13  # пагинация (preview)
+    search_fields = ['code', 'name']  # поле поиска (preview)
 
 
 @admin.register(Reason_for_transferring)
@@ -60,7 +60,7 @@ class Waste_collectionAdmin(admin.ModelAdmin):
     list_editable = []  # список редактируемых полей (preview)
     ordering = ['code']  # поля по которым будет происходит сортировка (preview)
     list_per_page = 13  # пагинация (preview)
-    filter_horizontal = ['waste_codes'] #горизонтальный виджет
+    filter_horizontal = ['waste_codes']  # горизонтальный виджет
 
 
 @admin.register(Officials)
@@ -68,7 +68,8 @@ class OfficialsAdmin(admin.ModelAdmin):
     """Должностные лица"""
     list_display = ['name', 'position', 'status', 'corporate_position']  # список отображаемых в админке полей (preview)
     list_editable = []  # список редактируемых полей (preview)
-    ordering = ['status', 'structural_division', 'corporate_position']  # поля по которым будет происходит сортировка (preview)
+    ordering = ['status', 'structural_division',
+                'corporate_position']  # поля по которым будет происходит сортировка (preview)
     list_per_page = 13  # пагинация (preview)
     search_fields = ['name']  # поле поиска (preview)
 
@@ -82,7 +83,7 @@ class Waste_receiversAdmin(admin.ModelAdmin):
     ordering = ['name']  # поля по которым будет происходит сортировка (preview)
     list_per_page = 13  # пагинация (preview)
     search_fields = ['name']  # поле поиска (preview)
-    filter_horizontal = ['waste_list'] #горизонтальный виджет
+    filter_horizontal = ['waste_list']  # горизонтальный виджет
 
 
 @admin.register(Landfill_facility)

@@ -1,3 +1,12 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 
-# Create your views here.
+from .models import *
+
+def test(request, pk):
+    waste = get_object_or_404(Waste_types, pk=pk)
+    context = {
+        'title': 'Экология',
+        'waste': waste,
+    }
+    return render(request, 'ecology/ecology.html', context=context)
+

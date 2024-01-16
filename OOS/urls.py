@@ -23,4 +23,6 @@ admin.site.index_title = 'Панель управления данными'
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('__debug__/', include('debug_toolbar.urls')),
+    path('ecology/', include('ecology.urls')),
+    path('exploitation/', include('exploitation.urls')),
 ]

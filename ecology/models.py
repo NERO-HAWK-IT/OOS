@@ -1,5 +1,5 @@
 from django.db import models
-from django.core.validators import MinLengthValidator, MaxLengthValidator
+from django.core.validators import MinLengthValidator, MaxLengthValidator, MinValueValidator
 
 
 class Waste_types(models.Model):
@@ -14,7 +14,7 @@ class Waste_types(models.Model):
                                 MaxLengthValidator(
                                     limit_value=7,
                                     message='Код д.б. 7-ми значным!'
-                                )
+                                ),
                             ])
     danger_class = models.ForeignKey('Danger_class', on_delete=models.PROTECT, related_name='danger_class',
                                      verbose_name='Класс опасности')
@@ -22,15 +22,16 @@ class Waste_types(models.Model):
     description = models.CharField(max_length=500, verbose_name='Описание отхода')
     production_rate = models.CharField(max_length=100, verbose_name='Норматив образования')
     status_code = models.CharField(max_length=3, verbose_name='Код физического состояния')
-    reason_transf = models.ForeignKey('Reason_for_transferring', on_delete=models.PROTECT, related_name='reason_for_waste',
+    reason_transf = models.ForeignKey('Reason_for_transferring', on_delete=models.PROTECT,
+                                      related_name='reason_for_waste',
                                       verbose_name='Причина передачи')
     annual_generation = models.DecimalField(max_digits=8, decimal_places=5, verbose_name='Годовое образвание')
     hint = models.CharField(max_length=255, verbose_name='Подсказка')
     mercury_containing = models.BooleanField(verbose_name='Ртутьсодержащий')
     unit = models.CharField(max_length=10, verbose_name='Единица измерения')
     start_date = models.DateField(verbose_name='Дата начала использования')
-    end_date = models.DateField(blank=True, verbose_name='Дата окончания использования')
-    picture = models.ImageField(verbose_name='Картинка отхода')
+    end_date = models.DateField(blank=True, null=True, verbose_name='Дата окончания использования')
+    picture = models.ImageField(upload_to='ecology/static/ecology/images/waste_image/', verbose_name='Картинка отхода')
 
     class Meta:
         verbose_name = 'Отход'
@@ -52,7 +53,7 @@ class Reason_for_transferring(models.Model):
                                 MaxLengthValidator(
                                     limit_value=2,
                                     message='Код д.б. 2-ух значным!'
-                                )
+                                ),
                             ])
     short_name = models.CharField(max_length=10, verbose_name='Краткое наименование причины')
 
@@ -75,7 +76,7 @@ class Danger_class(models.Model):
                                 MaxLengthValidator(
                                     limit_value=2,
                                     message='Код д.б. 2-ух значным!'
-                                )
+                                ),
                             ])
     name = models.CharField(max_length=30, unique=True, verbose_name='Нименование класса')
     short_name = models.CharField(max_length=10, verbose_name='Краткое наименование класса')
@@ -98,10 +99,10 @@ class Structural_division(models.Model):
     address = models.CharField(max_length=255, verbose_name='Адрес объекта')
     rental_area = models.DecimalField(max_digits=5, decimal_places=2, verbose_name='Площадь аренды')
     open_date = models.DateField(verbose_name='Дата открытия')
-    close_date = models.DateField(blank=True, verbose_name='Дата закрытия')
+    close_date = models.DateField(blank=True, null=True, verbose_name='Дата закрытия')
     waste_collection = models.ForeignKey('Waste_collection', on_delete=models.CASCADE,
                                          related_name='code_collection', verbose_name='Набор отходов')
-    location_map = models.ImageField(verbose_name='Схема местоположения')
+    location_map = models.ImageField(upload_to='ecology/static/ecology/images/location_scheme/', verbose_name='Схема местоположения')
 
     class Meta:
         verbose_name = 'Подразделение'
@@ -128,7 +129,7 @@ class Waste_collection(models.Model):
     """Наборы отходов"""
     code = models.CharField(max_length=5, verbose_name='Код набора')
     start_date = models.DateField(verbose_name='Дана начала ипользования набора')
-    end_date = models.DateField(blank=True, verbose_name='Дана окончания ипользования набора')
+    end_date = models.DateField(blank=True, null=True, verbose_name='Дана окончания ипользования набора')
     waste_codes = models.ManyToManyField('Waste_types', related_name='waste_codes_collection',
                                          verbose_name='Список кодов отходов')  # надо проработать и понять как правильно
 
@@ -173,7 +174,7 @@ class Waste_receivers(models.Model):
     name = models.CharField(max_length=255, verbose_name='Наименование приемщика')
     contract_number = models.CharField(max_length=30, verbose_name='№ договора')
     start_date = models.DateField(verbose_name='Дата заключения договора')
-    end_date = models.DateField(blank=True, verbose_name='Дата расторжеения договора')
+    end_date = models.DateField(blank=True, null=True, verbose_name='Дата расторжеения договора')
     reas_transf = models.ForeignKey('Reason_for_transferring', on_delete=models.CASCADE,
                                     verbose_name='Цель приема')
     waste_list = models.ManyToManyField('Waste_types', related_name='waste_codes_receivers',
@@ -243,7 +244,7 @@ class Cars(models.Model):
     prod_year = models.DateField(verbose_name='Дата производства')
     eco_class = models.CharField(max_length=5, verbose_name='Экологический класс')
     start_date = models.DateField(verbose_name='Дата начала эксплуатации')
-    end_date = models.DateField(blank=True, verbose_name='Дата окончания эксплуатации')
+    end_date = models.DateField(blank=True, null=True, verbose_name='Дата окончания эксплуатации')
 
     class Meta:
         verbose_name = 'Машина'
@@ -276,10 +277,10 @@ class Passport_data(models.Model):
             (PETROL_100, 'Бензин АИ-100'),
         )),
         ('Энергоресурсы', (
-            (ELICTRYCITY, ''),
-            (HEAT_ENERGY, ''),
-            (WATTER_SUPPLY, ''),
-            (WATTER_DIPOSAL, ''),
+            (ELICTRYCITY, 'Электроэнергия'),
+            (HEAT_ENERGY, 'Теплоэнергия'),
+            (WATTER_SUPPLY, 'Водоснабжение'),
+            (WATTER_DIPOSAL, 'Водоотведение'),
         )),
         ('Деятельность', (
             (QUANTITY_PRODUCTS_SOLD, 'Проданная продукция, единиц'),
@@ -290,7 +291,13 @@ class Passport_data(models.Model):
         ))
     ]
 
-    year = models.DateField(verbose_name='Год данных')
+    year = models.IntegerField(verbose_name='Год данных',
+                               validators=[
+                                   MinValueValidator(
+                                       limit_value=2017,
+                                       message='Год д.б. 4-х значным!'
+                                   )
+                               ])
     name = models.CharField(max_length=100, choices=PROPERTY_CHOICES, verbose_name='Наименование показателя')
     unit = models.CharField(max_length=10, verbose_name='Единица измерения')
     quantity = models.DecimalField(max_digits=10, decimal_places=2, verbose_name='Значение показателя')
@@ -308,8 +315,8 @@ class Licence(models.Model):
 
     number = models.CharField(max_length=10, verbose_name='Регистрационный номер документа')
     start_date = models.DateField(verbose_name='Дата начала действия')
-    end_date = models.DateField(verbose_name='Дата окончания действия')
-    conditions = models.CharField(max_length=255, blank=True, verbose_name='Условия разрешения/лицензии')
+    end_date = models.DateField(blank=True, null=True, verbose_name='Дата окончания действия')
+    conditions = models.CharField(max_length=255, blank=True, null=True, verbose_name='Условия разрешения/лицензии')
     permit_waste = models.DecimalField(max_digits=7, decimal_places=5,
                                        verbose_name='Количество отходов согласно разрешения (всего)')
     waste_III = models.DecimalField(max_digits=7, decimal_places=5,
@@ -327,18 +334,18 @@ class Waste_data(models.Model):
     """Движение отходов"""
     code = models.CharField(max_length=7, verbose_name='Код отхода')
     formation_date = models.DateField(verbose_name='Дата движения отхода')
-    quantity_generated = models.DecimalField(max_digits=8, decimal_places=5, blank=True,
+    quantity_generated = models.DecimalField(max_digits=8, decimal_places=5, blank=True, null=True,
                                              verbose_name='Объем образования отхода')
-    quantity_received = models.DecimalField(max_digits=8, decimal_places=5, blank=True,
+    quantity_received = models.DecimalField(max_digits=8, decimal_places=5, blank=True, null=True,
                                             verbose_name='Объем поступления отхода')
-    from_whom = models.CharField(max_length=255, blank=True, verbose_name='От кого поступил отход')
-    reas_admis = models.CharField(max_length=15, blank=True, verbose_name='Причина поступления отхода')
-    quantity_transf = models.DecimalField(max_digits=8, decimal_places=5, blank=True,
+    from_whom = models.CharField(max_length=255, blank=True, null=True, verbose_name='От кого поступил отход')
+    reas_admis = models.CharField(max_length=15, blank=True, null=True, verbose_name='Причина поступления отхода')
+    quantity_transf = models.DecimalField(max_digits=8, decimal_places=5, blank=True, null=True,
                                           verbose_name='Объем переданных отходов')
-    for_whom = models.CharField(max_length=30, blank=True, verbose_name='Кому передается отход')
-    reas_transf = models.CharField(max_length=30, blank=True, verbose_name='Причина передачи отхода')
+    for_whom = models.CharField(max_length=30, blank=True, null=True, verbose_name='Кому передается отход')
+    reas_transf = models.CharField(max_length=30, blank=True, null=True, verbose_name='Причина передачи отхода')
     name_officials = models.CharField(max_length=50, verbose_name='ФИО ответственного')
-    position_officials = models.CharField(max_length=50 , verbose_name='Должность ответственного')
+    position_officials = models.CharField(max_length=50, verbose_name='Должность ответственного')
     order_number = models.CharField(max_length=30, verbose_name='Номер приказа о назначении ответственного')
     order_date = models.DateField(verbose_name='Дата приказа о назначении ответственного')
     structural_division = models.CharField(max_length=100, verbose_name='Структурное подразделение')
