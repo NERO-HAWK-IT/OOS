@@ -31,7 +31,8 @@ class Waste_types(models.Model):
     unit = models.CharField(max_length=10, verbose_name='Единица измерения')
     start_date = models.DateField(verbose_name='Дата начала использования')
     end_date = models.DateField(blank=True, null=True, verbose_name='Дата окончания использования')
-    picture = models.ImageField(upload_to='ecology/static/ecology/images/waste_image/', verbose_name='Картинка отхода')
+    picture = models.ImageField(upload_to='ecology/images/waste_image/', height_field=None,
+                                width_field=None, verbose_name='Картинка отхода')
 
     class Meta:
         verbose_name = 'Отход'
@@ -102,7 +103,8 @@ class Structural_division(models.Model):
     close_date = models.DateField(blank=True, null=True, verbose_name='Дата закрытия')
     waste_collection = models.ForeignKey('Waste_collection', on_delete=models.CASCADE,
                                          related_name='code_collection', verbose_name='Набор отходов')
-    location_map = models.ImageField(upload_to='ecology/static/ecology/images/location_scheme/', verbose_name='Схема местоположения')
+    location_map = models.ImageField(upload_to='ecology/images/location_scheme/',
+                                     verbose_name='Схема местоположения')
 
     class Meta:
         verbose_name = 'Подразделение'

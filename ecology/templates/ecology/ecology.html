@@ -1,10 +1,13 @@
 {% extends 'base.html' %}
+{% load static %}
 {% block title %} {{ title }} {% endblock %}
 {% block content %}
-    <h1>{{ waste.code }}</h1>
-    <p>{{ waste.name }}</p>
-    <p >{{ waste.danger_class }}</p>
-    <img src="{{ waste.picture }}">
+    <div>
+        <h1>{{ waste.code }}</h1>
+        <p>{{ waste.name }}</p>
+        <p>{{ waste.danger_class }}</p>
+        <img src="{{ waste.picture.url }}" height="100" width="100" alt="Картинка не загружена">
 
+    </div>
 
 {% endblock %}

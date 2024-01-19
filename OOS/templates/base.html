@@ -1,12 +1,64 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>{% block title %}{% endblock %}</title>
+    <link rel="shortcut icon" type="image/png" href="{% static "images/favicon.png" %}">
+    <link type="text/css" href="{% static 'css/ecology_styles.css' %}" rel="stylesheet"/>
 </head>
 <body>
+<div class="wrapper">
+    <div class="page">
+        <header class="header">
+            <div class="header_first">
+                <div class="header_left">
+                    <a class="logo_wrap" href="https://www.ecco-shoes.by">
+                        <img class="logo" src="{% static 'images/logo.png' %}" alt="Лого не загрузилось">
+                    </a>
+                </div>
+                <div class="header_right">
+                    <div class="login">
+                        <button class="button">Вход</button>
+                    </div>
+                </div>
+            </div>
+            <nav class="menu">
+                <div class="menu_wrap">
+                    <a class="item_menu" href="">Охрана окружающей среды</a>
+                    <a class="item_menu" href="">Эксплуатация</a>
+                    <a class="item_menu" href="">Охрана труда</a>
+                    <a class="item_menu" href="">Пожарная безопасность</a>
+                </div>
+            </nav>
+        </header>
+        <div class="content">
+            {% block content %}{% endblock %}
+        </div>
+    </div>
+    <div class="new_footer">
+        <div class="copyright">
+            <div class="copyright_left">
+                &copy; Все права защищены.<br>
+                Портал инженерной службы.<br>
+                Разработал Карась Максим Владимирович.<br>
+                E-mail: <a href="mailto:makk@ecco.com" style="color: #fff">makk@ecco.com</a>
+            </div>
+            <div class="copyright_center">
+                Настоящий портал предназначен <br>
+                только для внутреннего использования компании <br>
+                ИООО "ЭККО-БЕЛРОС"
+            </div>
+            <div class="copyright_right">
+                ИООО «ЭККО-БЕЛРОС». УНП 191777010.<br>
+                Государственная регистрация от 15.02.2013 Минским горисполкомом<br>
+                Юр. адрес: 220030, Республика Беларусь, г. Минск, ул. Немига, 5, пом. 1<br>
+                Время работы: 9:00-18:00 пн-пт
+            </div>
+        </div>
+    </div>
+</div>
 
-{% block content %}
-{% endblock %}
 </body>
 </html>
