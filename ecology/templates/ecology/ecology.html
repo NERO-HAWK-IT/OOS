@@ -3,11 +3,13 @@
 {% block title %} {{ title }} {% endblock %}
 {% block content %}
     <div>
-        <h1>{{ waste.code }}</h1>
-        <p>{{ waste.name }}</p>
-        <p>{{ waste.danger_class }}</p>
-        <img src="{{ waste.picture.url }}" height="100" width="100" alt="Картинка не загружена">
-
+        {% for w in waste %}
+            <h1>{{ w.code }}</h1>
+            <p>{{ w.name }}</p>
+            <p>{{ w.danger_class }}</p>
+            <img src="{{ w.picture.url }}" height="100" width="100" alt="Картинка не загружена">
+            <hr>
+        {% endfor %}
     </div>
 
 {% endblock %}

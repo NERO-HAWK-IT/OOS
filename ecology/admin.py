@@ -55,8 +55,7 @@ class RegionAdmin(admin.ModelAdmin):
 @admin.register(Waste_collection)
 class Waste_collectionAdmin(admin.ModelAdmin):
     """Наборы отходов"""
-    list_display = ['code', 'start_date',
-                    'end_date']  # дополнить списком?? #список отображаемых в админке полей (preview)
+    list_display = ['code', 'start_date', 'end_date', 'division']  # дополнить списком?? #список отображаемых в админке полей (preview)
     list_editable = []  # список редактируемых полей (preview)
     ordering = ['code']  # поля по которым будет происходит сортировка (preview)
     list_per_page = 13  # пагинация (preview)
@@ -68,7 +67,7 @@ class OfficialsAdmin(admin.ModelAdmin):
     """Должностные лица"""
     list_display = ['name', 'position', 'status', 'corporate_position']  # список отображаемых в админке полей (preview)
     list_editable = []  # список редактируемых полей (preview)
-    ordering = ['status', 'structural_division',
+    ordering = ['-status', 'structural_division',
                 'corporate_position']  # поля по которым будет происходит сортировка (preview)
     list_per_page = 13  # пагинация (preview)
     search_fields = ['name']  # поле поиска (preview)
