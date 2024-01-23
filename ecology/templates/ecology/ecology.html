@@ -5,6 +5,7 @@
     <div>
         {% for w in waste %}
             <h1>{{ w.code }}</h1>
+
             <p>{{ w.name }}</p>
             <p>{{ w.danger_class }}</p>
             <img src="{{ w.picture.url }}" height="100" width="100" alt="Картинка не загружена">

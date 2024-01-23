@@ -4,6 +4,7 @@ from .models import *
 
 def test(request):
     waste = Waste_types.actual.all()
+
     context = {
         'title': 'Экология',
         'waste': waste,

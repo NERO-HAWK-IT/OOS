@@ -392,6 +392,10 @@ class Licence(models.Model):
     def __str__(self):
         return self.number
 
+class Waste_for_code(models.Manager):
+    def get_queryset(self, code):
+        return super().get_queryset().filter(code=code)
+
 
 class Waste_data(models.Model):
     """Движение отходов"""
@@ -413,6 +417,9 @@ class Waste_data(models.Model):
     order_date = models.DateField(verbose_name='Дата приказа о назначении ответственного')
     structural_division = models.CharField(max_length=100, verbose_name='Структурное подразделение')
     region_code = models.CharField(max_length=5, verbose_name='Код района в котором располагается подразделение')
+
+    objects = models.Manager()
+    waste_for_code = Waste_for_code()
 
     class Meta:
         verbose_name = 'Данные по отходам'
