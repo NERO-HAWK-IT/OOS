@@ -118,7 +118,7 @@ class Structural_division(models.Model):
                                      verbose_name='Схема местоположения')
 
     objects = models.Manager()
-    Actual = Actual_division()
+    actual = Actual_division()
 
     class Meta:
         verbose_name = 'Подразделение'
@@ -392,10 +392,6 @@ class Licence(models.Model):
     def __str__(self):
         return self.number
 
-class Waste_for_code(models.Manager):
-    def get_queryset(self, code):
-        return super().get_queryset().filter(code=code)
-
 
 class Waste_data(models.Model):
     """Движение отходов"""
@@ -419,7 +415,6 @@ class Waste_data(models.Model):
     region_code = models.CharField(max_length=5, verbose_name='Код района в котором располагается подразделение')
 
     objects = models.Manager()
-    waste_for_code = Waste_for_code()
 
     class Meta:
         verbose_name = 'Данные по отходам'
