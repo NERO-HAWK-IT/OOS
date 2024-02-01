@@ -9,8 +9,8 @@ class Waste_stok:
         self.code = code
 
 
-def get_stok(code: str):
-    division = Officials.actual.get(name='Е.Д.Красник').structural_division
+def get_stok(name: str):
+    division = Officials.actual.get(name=name).structural_division
     division_id = division.pk  # Получаем id подразделения
     division_name = division.name  # Получаем наименование подразделения
     collection = [el.code for el in Waste_collection.actual.get(
