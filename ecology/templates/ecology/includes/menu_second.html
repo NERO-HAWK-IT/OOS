@@ -1,0 +1,8 @@
+<nav class="menu">
+    <div class="menu_wrap">
+        {% for el in menu2 %}
+            <a class="item_menu" href="{% url el.url_name %}">{{ el.title }}</a>
+        {% endfor %}
+    </div>
+</nav>
+

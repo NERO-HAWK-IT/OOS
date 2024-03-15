@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <title>{% block title %}{% endblock %}</title>
     <link rel="shortcut icon" type="image/png" href="{% static "images/favicon.png" %}">
-    <link type="text/css" href="{% static 'css/ecology_styles1.css' %}" rel="stylesheet"/>
+    <link type="text/css" href="{% static 'css/ecology_styles.css' %}" rel="stylesheet"/>
 </head>
 <body>
 <div class="wrapper">
@@ -26,18 +26,22 @@
             </div>
             <nav class="menu">
                 <div class="menu_wrap">
-                    <a class="item_menu" href="">Охрана окружающей среды</a>
-                    <a class="item_menu" href="">Эксплуатация</a>
-                    <a class="item_menu" href="">Охрана труда</a>
-                    <a class="item_menu" href="">Пожарная безопасность</a>
+                    <a class="item_menu" href="">{{ menu1.0|capfirst }}</a>
+                    <a class="item_menu" href="">{{ menu1.1|capfirst }}</a>
+                    <a class="item_menu" href="">{{ menu1.2|capfirst }}</a>
+                    <a class="item_menu" href="">{{ menu1.3|capfirst }}</a>
+                    <a class="item_menu" href="">{{ menu1.4|capfirst }}</a>
                 </div>
             </nav>
+            <hr>
+            {% block menu %} {% endblock %}
         </header>
         <div class="content">
             {% block content %}{% endblock %}
         </div>
     </div>
     <div class="new_footer">
+        <hr color="#19fadc">
         <div class="copyright">
             <div class="copyright_left">
                 &copy; Все права защищены.<br>

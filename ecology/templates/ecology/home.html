@@ -2,14 +2,7 @@
 {% load static %}
 {% block title %} {{ title|capfirst }} {% endblock %}
 {% block menu %}
-    <nav class="menu">
-        <div class="menu_wrap">
-            <a class="item_menu" href="{% url 'home' %}">Главная страница</a>
-            {% for el in menu2 %}
-                <a class="item_menu" href="{% url el.url_name %}">{{ el.title }}</a>
-            {% endfor %}
-        </div>
-    </nav>
+    {% include 'ecology/includes/menu_second.html' %}
 {% endblock %}
 {% block content %}
     <div>
